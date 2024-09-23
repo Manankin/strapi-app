@@ -12,10 +12,11 @@ function Apply() {
   const [message,setMessage] = useState("")
 
   const update  = async () =>  {
-    fetch("http://localhost:1337/api/jobslists/"+jobid)
+    fetch("http://localhost:1337/api/joblists/"+jobid)
       .then(res => res.json())
       .then(job_info => {
-        setJob(job_info.data.attributes);
+        console.log('job_info incoming from localhost:1337/api/joblists', job_info);
+        setJob(job_info.data.attributes || []);
         console.log(job_info.data.attributes);
       })
   }
@@ -35,7 +36,7 @@ function Apply() {
                 "Email": email,
                 "Message": message,
                 "Portfolio_Link": link,
-                "Status": "Pending",
+                "Statuses": "Pending",
                 "JobID": jobid
             }
         })
@@ -87,17 +88,18 @@ function Apply() {
                     width:'80px',
                     height:'80px',
                     border:'3px solid pink',
-                    marginLeft:'40px',
+                    // marginLeft:'40px',
                     marginTop:'18px',
                     borderRadius:'10px',
-                    // marginLeft:'44%'
+                    marginLeft:'44%'
                   }}
                   alt=''
                 />
                 {/* </div> */}
                 <div className={{float:'left',marwginTop:'27px',marginLeft:'18px',width:'100%'}}>
-                  <center><span className="span1_"><b>{job.JobPosition}</b></span><br/>
-
+                  <center>
+                    <span className="span1_"><b>{job.JobPosition}</b></span>
+                    <br/>
                     <span className="span1_">{job.Location}</span>
                     <br/>
                     <br/>

@@ -9,11 +9,11 @@ function App() {
 
 
   function update() {
-    fetch("http://localhost:1337/api/jobslists")
+    fetch("http://localhost:1337/api/joblists/")
       .then(res => res.json())
       .then(todo => {
-        console.log(todo);
-        setTodos(todo.data);
+        console.log(todo.data);
+        setTodos(todo.data || []);
       })
   }
   useEffect(() => {
@@ -106,7 +106,7 @@ function App() {
                     </div> <br />
                   </div>
                 )
-             } else { return ''}
+             } else { return '' }
            })
          }
         </div>

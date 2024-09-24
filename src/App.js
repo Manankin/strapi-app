@@ -4,18 +4,19 @@ import { Link } from 'react-router-dom';
 
 
 function App() {
- const [todos, setTodos] = useState([]);
- const [search, setSearch] = useState("");
+  const [todos, setTodos] = useState([]);
+  const [search, setSearch] = useState("");
 
 
   function update() {
     fetch("http://localhost:1337/api/joblists/")
       .then(res => res.json())
       .then(todo => {
+        setTodos(todo.data);
         console.log(todo.data);
-        setTodos(todo.data || []);
       })
   }
+
   useEffect(() => {
      update();
   }, [])
@@ -77,6 +78,7 @@ function App() {
           <br />
           {
             todos.map((todo, i) => {
+              console.log('app.js / todo:', todo)
               const link = "apply?jobid=" + todo.id;
               const filter = JSON.stringify(todo.attributes).toLowerCase()
               if(filter.includes(search)){

@@ -3,27 +3,25 @@ import { Link } from 'react-router-dom';
 
 function Apply() {
   const queryParams = new URLSearchParams(window.location.search);
-  const jobid = queryParams.get('jobid');
+  const jobid = Number(queryParams.get('jobid'));
 
-  const [job, setJob] = useState([]);
+  const [job, setJob] = useState({});
   const [fullname,setFullname] = useState("")
   const [email,setEmail] = useState("")
   const [link,setLink] = useState("")
   const [message,setMessage] = useState("")
 
   const update  = async () =>  {
-    fetch("http://localhost:1337/api/joblists/"+jobid)
+    fetch("http://localhost:1337/api/joblists/")
       .then(res => res.json())
       .then(job_info => {
-        console.log('job_info incoming from localhost:1337/api/joblists', job_info);
-        setJob(job_info.data.attributes || []);
-        console.log(job_info.data.attributes);
+        const currentJob = job_info.data.find((elem) => elem.id === jobid);
+        setJob(currentJob);
       })
   }
 
   useEffect(() => {
     update();
-    console.log(job);
   }, [])
 
   const subbmit = async () => {

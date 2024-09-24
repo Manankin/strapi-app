@@ -5,6 +5,8 @@ import App from './App';
 import Apply from './pages/apply';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter,Routes,Route} from 'react-router-dom';
+import Dashboard from './pages/dashboard';
+import Login from './pages/login';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -13,6 +15,9 @@ root.render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="apply" element={<Apply />} />
+        {/* <Route path="test" elemet={<Test />} /> */}
+        <Route path="dashboard" element={<Dashboard/>} />
+        <Route path="login" element={<Login />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

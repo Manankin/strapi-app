@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
 
 export default function Dashboard() {
-  const [state, setState] = useState("")
+  // const [state, setState] = useState("")
   const [Applicant, setApplicants] = useState([]);
   const [jobTitle, setjobTitle] = useState("")
   const [jobCategory, setjobCategory] = useState("")
@@ -18,14 +18,17 @@ export default function Dashboard() {
       fetch("http://localhost:1337/api/applicantlists")
           .then(res => res.json())
           .then(list => {
-              setApplicants(list.data);
+            console.log(list)
+            console.log(list.data)
+            setApplicants(list.data);
           })
   }
 
   function open() {
-      fetch("http://localhost:1337/api/jobslists")
+      fetch("http://localhost:1337/api/joblists")
           .then(res => res.json())
           .then(list => {
+              console.log(list.data);
               setOpenJob(list.data);
           })
   }
@@ -58,10 +61,10 @@ export default function Dashboard() {
     open();
   }, [])
 
-  if (typeof (Applicant.id) === "undefinsed") {
-    const url = "/login";
-    return <Navigate to={url} />;
-  }
+  // if (Applicant.length) {
+  //   const url = "/login";
+  //   return <Navigate to={url} />;
+  // }
 
   const addjob = async () => {
     const requestOptions = {
@@ -80,9 +83,9 @@ export default function Dashboard() {
       })
     };
     // console.log(requestOptions)
-    fetch('http://localhost:1337/api/jobslists', requestOptions)
-        .then(response => response.json())
-    //  .then(data => this.setState(data ));
+    fetch('http://localhost:1337/api/joblists', requestOptions)
+      .then(response => response.json())
+      // .then(data => this.setState(data));
     alert("Job Added Successful...");
   }
 
@@ -107,13 +110,13 @@ export default function Dashboard() {
           <div className="filter2_">
             <span>Open Positions</span>
             <hr />
-            {
+            { 
               openJob.map((list, i) => {
 
-                  if (list.attributes.JobStatus == "Open") {
+                  if (list.JobStatus === "Open") {
                       return (
                           <div key={i}>
-                              <span style={{ fontSize: '17px' }}>{list.attributes.JobPosition}</span>
+                              <span style={{ fontSize: '17px' }}>{list.JobPosition}</span>
                               <hr />
                           </div>
                       )
@@ -127,7 +130,7 @@ export default function Dashboard() {
         <br /><br />
         {
           Applicant.map((list, i) => {
-            if (list.attributes.Status == "Pending") {
+            if (list.Statuses === "Pending") {
               return (
                 <div key={i}>
                   <div>
